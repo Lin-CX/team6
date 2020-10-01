@@ -1,0 +1,47 @@
+<!-- inherit statement -->
+{% extends '__base__.html' %}
+
+{% block title %}
+	M&M | Movie
+{% endblock %}
+
+{% block body %}
+<body>
+	{% if searchPage==1 %}
+		<h3>Saerch Movie:</h3>
+		<form action="/movie" method="post">
+			<input type="text" name="moviename"><br>
+			{% if falseInfo %}
+					<p>{{ falseInfo }}</p>
+			{% endif %}
+			<br>
+			<input type="submit" name="submit" value="Search">
+		</form>
+	{% else %}
+		<p><label>Movie: </label>{{ movieSearInfo[1] }}</p>
+		<p><label>Tag: </label>{{ movieSearInfo[2] }}</p>
+		<p><label>Score: </label>
+		{% if movieSearInfo[3] == -1 %}
+			No score
+		{% else %}
+			{{ movieSearInfo[3] }}
+		{% endif %}</p>
+		<p><label>Plot: </label>{{ movieSearInfo[4] }}</p>
+		<div>
+			Score: 
+			<form method="post" action="/scoring">
+				<input type="radio" name="score" value="1">1
+				<input type="radio" name="score" value="2">2
+				<input type="radio" name="score" value="3" checked>3
+				<input type="radio" name="score" value="4">4
+				<input type="radio" name="score" value="5">5
+				{% if session['username'] == "" %}
+				<a href="signin"><button type="button" onclick="alert('Please sign in!')">Submit</button></a>
+				{% else %}
+				<button type="submit" onclick="alert('Scoring Done!')">Submit</button>
+				{% endif %}
+			</form>
+		</div>
+	{% endif %}
+</body>
+{% endblock %}

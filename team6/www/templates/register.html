@@ -1,0 +1,26 @@
+<!-- inherit statement -->
+{% extends '__base__.html' %}
+
+{% block title %}
+	M&M | Register
+{% endblock %}
+
+{% block body %}
+<body>
+	<h1>Register</h1>
+	<form action="/register" method="post">
+		<label>Uername</label><br>
+		<input type="text" name="username"><br>
+		<label>Email</label><br>
+		<input type="email" name="email"><br>
+		<label>Password</label><br>
+		<input type="password"name="passwd"><br>
+		{% if falseInfo %}
+			<p>{{ falseInfo }}</p>
+		{% else %}
+			<p></p>
+		{% endif %}
+		<button type="submit">REGISTER</button>
+	</form>
+</body>
+{% endblock %}
