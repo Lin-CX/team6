@@ -24,7 +24,7 @@
 		{% if movieSearInfo[3] == -1 %}
 			No score
 		{% else %}
-			{{ movieSearInfo[3] }}
+			{{ movieSearInfo[3] | round(1, 'ceil')  }}
 		{% endif %}</p>
 		<p><label>Plot: </label>{{ movieSearInfo[4] }}</p>
 		<div>
@@ -35,10 +35,10 @@
 				<input type="radio" name="score" value="3" checked>3
 				<input type="radio" name="score" value="4">4
 				<input type="radio" name="score" value="5">5
-				{% if session['username'] == "" %}
-				<a href="signin"><button type="button" onclick="alert('Please sign in!')">Submit</button></a>
+				{% if session['username'] %}
+					<button type="submit" onclick="alert('Scoring Done!')">Submit</button>
 				{% else %}
-				<button type="submit" onclick="alert('Scoring Done!')">Submit</button>
+					<a href="signin"><button type="button" onclick="alert('Please sign in!')">Submit</button></a>
 				{% endif %}
 			</form>
 		</div>

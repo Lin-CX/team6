@@ -23,9 +23,9 @@ def dbUpdate(moviename, moviescore):
 	else:
 		score = (moviescore + (score*n)) / (n+1)
 	# only keep one decimal point
-	score = int(score*10)/10
+	score = int(score*100000)/100000
 	n += 1
-	#UPDATE COMPANY SET ADDRESS = 'Texas' WHERE ID = 6
+	#syntax: UPDATE COMPANY SET ADDRESS = 'Texas' WHERE ID = 6
 	sql = "update movie_info set score = " + str(score) + ", numberOfScoring = " + str(n) + " where movie_name = '" + moviename + "'"
 	flag = db.db_action(sql, 0)
 	db.close()
