@@ -13,8 +13,8 @@
 <body>
 	<div class="header">
 		<ul>
-			{% if session['username'] != "" %}
 			<!-- SESSION: username -->
+			{% if session['username'] %}
 				<li><a href="#">{{ session['username'] }}</a></li>
 				<li><a href="signout"><button style="width:100px">Sign out</button></a></li>
 			{% else %}
