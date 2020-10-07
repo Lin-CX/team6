@@ -2,7 +2,7 @@ import sqlite3
 import dbutil
 
 global db
-dbname = 'userdb.db'
+dbname = 'demo.db'
 
 def dbQuery(choice, table):
 	db = dbutil.dbUtils(dbname)
@@ -68,7 +68,7 @@ def dbUpdate(moviename, moviescore):
 if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
-	#dbUpdate("movie1", 0)
+	dbUpdate("movie1", 0)
 	userlist = dbQuery("*", "movie_info")
 	for i in userlist:
 		print(i)

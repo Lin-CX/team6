@@ -72,7 +72,7 @@ def dbInsertUser(userid, username, passwd):
 		
 @userProcess.route('/signout')
 def signoutProcess():
-	session.pop('username',None)
+	session.pop('username', None)
 	return redirect(url_for('init'))
 	
 @userProcess.route('/signin')
