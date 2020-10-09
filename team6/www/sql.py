@@ -2,7 +2,7 @@ import sqlite3
 import dbutil
 
 global db
-dbname = 'demo.db'
+dbname = 'userdb.db'
 
 def dbQuery(choice, table):
 	db = dbutil.dbUtils(dbname)
@@ -65,12 +65,34 @@ def dbUpdate(moviename, moviescore):
 	flag = db.db_action(sql, 0)
 	db.close()
 	
+def dbDelete(db, table):
+	# DROP TABLE table_name
+	db = dbutil.dbUtils(dbname)
+	sql = "drop table %s" % (table)	
+	if db.db_action(sql, 0) == True:
+		print("%s delete done." % (table))
+	db.close()
+	
+def dbInsertImg(imgname, uploader, categroy, author, intro, tag='null'):
+	db = dbutil.dbUtils(dbname)
+	# sql = "I love %s" % ('piano') | 'insert into img values '+ imgInfo
+	sql = "insert into img values (null, '%s', '%s', '%s', '%s', '%s', '%s', 0)" % (imgname, uploader, categroy, author, intro, tag)
+	#if db.db_action(sql, 0) == True:
+	#	print("User insert done.")
+	try:
+		db.db_action(sql, 0)
+		print("Img insert done.")
+	except:
+		print("Exst img name!")
+	db.close()
+	
 if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
-	dbUpdate("movie1", 0)
-	userlist = dbQuery("*", "movie_info")
+	#dbUpdate("movie1", 0)
+	userlist = dbQuery("*", "img")
 	for i in userlist:
 		print(i)
-	#print(('test', '123') in userlist)
-	#checkUserList("user")
+	print('***')
+	#dbInsertImg('321.png', 'imgtest', '0', 'TZ', 'Team BVM')
+	#dbDelete('demo', 'img')
