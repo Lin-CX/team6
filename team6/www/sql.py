@@ -90,9 +90,10 @@ if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
 	#dbUpdate("movie1", 0)
-	userlist = dbQuery("*", "img")
+	inp = "dia"
+	userlist = dbQuery("imgname", "img")
 	for i in userlist:
-		print(i)
+		print(i[0].rsplit('.', 1)[0].lower())
 	print('***')
 	#dbInsertImg('321.png', 'imgtest', '0', 'TZ', 'Team BVM')
 	#dbDelete('demo', 'img')

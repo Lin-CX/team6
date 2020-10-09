@@ -62,12 +62,30 @@ def upload():
 			
 	return render_template('upload.html')
 	
+def checkFilename(filename):
+	namelist = dbQuery("imgname", "img")
+	for i in namelist:
+			if filename == i[0].rsplit('.', 1)[0]:
+				filename = i[0]
+				return filename
+	return False
 
-@uploadProcess.route('/check/')
+@uploadProcess.route('/show', methods=['GET', 'POST'])
 def showProcess():
-	return redirect(url_for('uploadProcess.showPage', filename=filename))
+	if request.method == "POST":
+		filename = request.form["filename"]
+		if filename == "":
+			return render_template("show.html", initpage=1)
+		filename = checkFilename(filename)
+		if filename == False:
+			return render_template('show.html', initpage=1, falseInfo="No this image!")
+		else:			
+			return redirect(url_for('uploadProcess.showPage', filename=filename))
 
-@uploadProcess.route('/show/<filename>')
+	return render_template("show.html", initpage=1)
+		
+
+@uploadProcess.route('/showPage/<filename>')
 def showPage(filename):
 	# send image to frond-end
 	img_stream = return_img_stream(UPLOAD_FOLDER+'/'+filename)

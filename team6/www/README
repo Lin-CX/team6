@@ -5,9 +5,9 @@ static/css:		css file
 static/js:		javascript file
 
 Update:
+	---2020/10/09---
 	Added image upload function.
-	When user uploading image, the info of this user will be saved together.
+	When user uploading image, the username will be saved together.
 	If no image name be entered when upload, the image will be saved with the original name.
-	If the uploader
-	If the uploader info not in database, the upload fails.
+	If the username not in database, the upload fails.
 	If the image name is duplicated with database info, the upload fails.
