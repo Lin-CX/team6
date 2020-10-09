@@ -1,0 +1,40 @@
+<!-- inherit statement -->
+{% extends '__base__.html' %}
+
+{% block title %}
+	Art & Mate | Team 6
+{% endblock %}
+{% block head %}
+	<style>
+		.header li{list-style:none;display:inline;width:300px;margin:0px 30px;}
+	</style>
+{% endblock %}
+{% block body %}
+<body>
+	<div class="header">
+		<ul>
+			<!-- SESSION: username -->
+			{% if session['username'] %}
+				<li><a href="#">{{ session['username'] }}</a></li>
+				<li><a href="signout"><button style="width:100px">Sign out</button></a></li>
+			{% else %}
+				<li><a href="signin"><button style="width:100px">Sign in</button></a></li>
+				<li><a href="register"><button style="width:100px">Register</button></a></li>
+			{% endif %}
+			<li><a href="movie">Movie</a></li>
+			<li><a href="upload">Upload</a></li>
+			<li><a href="check">Check img test</a><li>
+		</ul>
+	</div>
+	<h2>Team 6</h2>
+	{% if session['username'] != "" %}
+		<h2>Hello {{ session['username'] }}</h2>
+	{% else %}
+		<h2>Hello</h2>
+	{% endif %}
+	<p>Image test:</p>
+	<img src="{{ url_for('static', filename='images/TestImage.gif') }}" alt="">
+	<!--<p><a href="http://localhost:8080/register"><button>Register</button></a></p>-->
+	<div><br>Welcome to team 6 webpage  </div><br>
+</body>
+{% endblock %}

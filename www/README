@@ -1,0 +1,13 @@
+www:			python file
+templates:		html file
+static/images:		pictures
+static/css:		css file
+static/js:		javascript file
+
+Update:
+	Added image upload function.
+	When user uploading image, the info of this user will be saved together.
+	If no image name be entered when upload, the image will be saved with the original name.
+	If the uploader
+	If the uploader info not in database, the upload fails.
+	If the image name is duplicated with database info, the upload fails.

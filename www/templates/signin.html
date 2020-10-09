@@ -1,0 +1,24 @@
+<!-- inherit statement -->
+{% extends '__base__.html' %}
+
+{% block title %}
+	Art & Mate | Signin
+{% endblock %}
+
+{% block body %}
+<body>
+<center>
+	<h3>Sign In Page</h3>
+	<div>
+		<form action="/signinProcess" method="post">
+			Username: <br><input type="text" name="un"><br>
+			Password: <br><input type="password" name="passwd"><br>
+			{% if falseInfo %}
+				<p>{{ falseInfo }}</p>
+			{% endif %}
+			<input type="submit" name="submit" value="Signin">
+		</form>
+	</div>
+</center>
+</body>
+{% endblock %}

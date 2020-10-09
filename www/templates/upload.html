@@ -1,0 +1,35 @@
+<!-- inherit statement -->
+{% extends '__base__.html' %}
+
+{% block title %}
+	Art & Mate | UploadPage
+{% endblock %}
+
+{% block body %}
+<body>
+	{% if uploadDone %}
+		{{ uploadDone }}
+	{% else %}
+		<form action="/upload" method="post" enctype="multipart/form-data">
+			<input type="file" name="file">
+			<input type="radio" name="category" value="회화" checked>회화
+			<input type="radio" name="category" value="서양화">서양화
+			<input type="radio" name="category" value="동양화">동양화<br>
+			<label>Image name:</label><br>
+			<input type="text" name="imagename"><br>
+			<label>Author:</label><br>
+			<input type="text" name="author"><br>
+			<label>Introduction:</label><br>
+			<input type="text" name="intro" style="width:400px; height:100px;"><br>
+			{% if falseInfo %}
+				<p>{{ falseInfo }}</p>
+			{% endif %}
+			{% if session['username'] %}
+				<input type="image" src="{{ url_for('static', filename='images/upload_icon.png') }}">
+			{% else %}
+				<a href="signin"><img alt="upload" onclick="alert('Please sign in!')" src="{{ url_for('static', filename='images/upload_icon.png') }}"></a>
+			{% endif %}
+		</form>
+	{% endif %}
+</body>
+{% endblock %}
