@@ -1,0 +1,31 @@
+<!-- inherit statement -->
+{% extends '__base__.html' %}
+
+{% block title %}
+	Art & Mate | Show Image
+{% endblock %}
+{% block head %}
+	<style>
+		.imgp li{list-style:none;display:inline;width:300px;margin:0px 30px;}
+		.imginfo li{list-style:none;display:inline;width:300px;margin:0px 30px;}
+	</style>
+{% endblock %}
+{% block body %}
+<body>
+	<div class="imgp">
+		<ul>
+			<li><img style="width:900px" src="data:;base64,{{ img_stream }}"></li>
+			
+			<div class="imginfo">
+				<li><label>Image name: </label>{{ imgInfo[1] }}</li>
+				<li><label>Author: </label>{{ imgInfo[4] }}</li>
+			</div>
+			
+			<li><label>Introduction: </label>{{ imgInfo[5] }}</li>
+			<form method="post">
+				<input type="button" name="like" value="Like">
+			</form>
+		</ul>
+	</div>
+</body>
+{% endblock %}

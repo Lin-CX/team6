@@ -86,14 +86,22 @@ def dbInsertImg(imgname, uploader, categroy, author, intro, tag='null'):
 		print("Exst img name!")
 	db.close()
 	
+def fetchImgInfo(filename):
+	imgList = dbQuery("*", "img")
+	for i in imgList:
+		if filename == i[1]:
+			return list(i)
+	return False
+	
 if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
 	#dbUpdate("movie1", 0)
 	inp = "dia"
-	userlist = dbQuery("imgname", "img")
-	for i in userlist:
-		print(i[0].rsplit('.', 1)[0].lower())
+	tlist = dbQuery("*", "img")
+	for i in tlist:
+		print(i)
 	print('***')
-	#dbInsertImg('321.png', 'imgtest', '0', 'TZ', 'Team BVM')
+	#dbInsertImg('di.png', 'imgtest', '0', 'TZ', '')
+	#print(fetchImgInfo('ia.png'))
 	#dbDelete('demo', 'img')

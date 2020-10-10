@@ -69,27 +69,57 @@ def checkFilename(filename):
 				filename = i[0]
 				return filename
 	return False
-
-@uploadProcess.route('/show', methods=['GET', 'POST'])
-def showProcess():
+	
+@uploadProcess.route('/searchimg', methods=['GET', 'POST'])
+def searchimg():
 	if request.method == "POST":
-		filename = request.form["filename"]
-		if filename == "":
-			return render_template("show.html", initpage=1)
-		filename = checkFilename(filename)
-		if filename == False:
-			return render_template('show.html', initpage=1, falseInfo="No this image!")
-		else:			
-			return redirect(url_for('uploadProcess.showPage', filename=filename))
-
-	return render_template("show.html", initpage=1)
+		searchby = request.form["searchby"]
+		searchinfo = request.form["searchinfo"]
 		
+		# search by imagename
+		if searchby == '1':
+			if searchinfo == "":
+				return render_template("searchimg.html", falseInfo="Empty filename!")
+			return redirect(url_for("uploadProcess.showProcess", filename=searchinfo))
+		
+		# search by author		
+		elif searchby == '2':
+			pass
+		# search by uploader
+		else:
+			pass
 
-@uploadProcess.route('/showPage/<filename>')
-def showPage(filename):
+	return render_template("searchimg.html")
+
+@uploadProcess.route('/showProcess')
+def showProcess():
+	filename = request.args.get('filename')	
+	if filename == "":
+		return render_template("searchimg.html", falseInfo="Empty filename!")
+	checkinfo = checkFilename(filename)	# if exist, return full filename; if not, return False
+	if checkinfo == False:
+		return render_template('searchimg.html', falseInfo="No this image!")
+	else:			
+		return redirect(url_for('uploadProcess.showPage', filename=checkinfo))		
+
+@uploadProcess.route('/showPage')
+def showPage():
+	filename = request.args.get('filename')
 	# send image to frond-end
-	img_stream = return_img_stream(UPLOAD_FOLDER+'/'+filename)
-	return render_template('show.html', img_stream=img_stream)
+	imgList = fetchImgInfo(filename)
+	if imgList == False:
+		return render_template('searchimg.html', falseInfo="No this image!")
+	else:
+		img_stream = return_img_stream(UPLOAD_FOLDER+'/'+filename)
+		imgList[1] = imgList[1].rsplit('.', 1)[0]
+		return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList)
+	
+def fetchImgInfo(filename):
+	imgList = dbQuery("*", "img")
+	for i in imgList:
+		if filename == i[1]:
+			return list(i)
+	return False
 	
 def dbQuery(choice, table):
 	db = dbutil.dbUtils('userdb.db')
