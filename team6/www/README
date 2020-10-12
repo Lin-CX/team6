@@ -3,6 +3,7 @@ templates:		html file
 static/images:		pictures
 static/css:		css file
 static/js:		javascript file
+static/upload_file	user image
 
 Update:
 	---2020/10/09---

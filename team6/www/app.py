@@ -10,7 +10,7 @@ import dbutil
 import sqlite3
 
 app =Flask(__name__)
-app.secret_key='Team6Fignting!'
+app.secret_key='dlawnstkd'
 
 urls = [userProcess, mateProcess, uploadProcess]
 for url in urls:
