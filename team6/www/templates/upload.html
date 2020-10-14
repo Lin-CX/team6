@@ -8,7 +8,7 @@
 {% block body %}
 <body>
 	{% if uploadDone %}
-		{{ uploadDone }}
+		<h1>{{ uploadDone }}</h1>
 	{% else %}
 		<form action="/upload" method="post" enctype="multipart/form-data">
 			<input type="file" name="file">

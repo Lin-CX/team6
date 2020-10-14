@@ -26,8 +26,19 @@
 			<form method="post" action="/likeprocess">
 				<input type="hidden" name="filename" value="{{ imgInfo[1] }}">
 				<input type="hidden" name="filename_extension" value="{{ imgInfo[8] }}">
-				<li><button style="background: url(static/images/like_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=1></button></li>
-				<li><button style="background: url(static/images/dislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-1></button></li>
+				{% if isLiked == 0 %}
+					<input type="hidden" name="like_type" value="0">
+					<li><button style="background: url(static/images/isLike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-1></button></li>
+					<li><button style="background: url(static/images/dislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-2></button></li>
+				{% elif isLiked == 1 %}
+					<input type="hidden" name="like_type" value="1">
+					<li><button style="background: url(static/images/like_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=2></button></li>
+					<li><button style="background: url(static/images/isDislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=1></button></li>
+				{% else %}
+					<input type="hidden" name="like_type" value="2">
+					<li><button style="background: url(static/images/like_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=1></button></li>
+					<li><button style="background: url(static/images/dislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-1></button></li>
+				{% endif %}
 			</form>
 			<li>Like and dislike button, can be change.</li>
 		</ul>

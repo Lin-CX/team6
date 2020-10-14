@@ -112,7 +112,7 @@ def showPage():
 	else:
 		img_stream = return_img_stream(UPLOAD_FOLDER+'/'+filename)
 		imgList.append(imgList[1].rsplit('.', 1)[1])
-		imgList[1] = imgList[1].rsplit('.', 1)[0]			# remove the filename extension
+		imgList[1] = imgList[1].rsplit('.', 1)[0]			# remove filename extension
 		return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList)
 	
 @uploadProcess.route('/likeprocess', methods=['POST'])
@@ -120,10 +120,32 @@ def likeprocess():
 	#filename = 'dia.png'		# temp
 	filename = request.form["filename"]
 	filename_extension = request.form["filename_extension"]
+	like_type = request.form["like_type"]
 	fullfilename = filename+'.'+filename_extension
+	filename = fullfilename
 	likeOrDislike = request.form["likeOrDislike"]
 	likeDbProcess(fullfilename, int(likeOrDislike))
-	return redirect(url_for('uploadProcess.showPage', filename=fullfilename))
+	#return redirect(url_for('uploadProcess.showPage', filename=fullfilename))
+	imgList = fetchImgInfo(filename)
+	img_stream = return_img_stream(UPLOAD_FOLDER+'/'+filename)
+	imgList.append(imgList[1].rsplit('.', 1)[1])
+	imgList[1] = imgList[1].rsplit('.', 1)[0]			# remove filename extension
+	if like_type == '2':
+		if likeOrDislike == '1':
+			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=0)	# like
+		else:
+			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=1)	# dislike
+	elif like_type == '1':
+		if likeOrDislike == '2':
+			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=0)	# like
+		else:
+			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=2)	# normal
+	else:
+		if likeOrDislike == '-1':
+			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=2)	# normal
+		else:
+			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=1)	# dislike
+		
 	
 def likeDbProcess(filename, n):
 	db = dbutil.dbUtils('userdb.db')
