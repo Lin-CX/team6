@@ -20,4 +20,4 @@ Update:
 	---2020/10/14---
 	Added "like" function.
 	Click once to like or dislike, click again to cancel last click.
-	Click another one to cancel last click and like or dislike.
+	After click like or dislike, you can click another one to cancel last click and performing like or dislike operation at the same time.
