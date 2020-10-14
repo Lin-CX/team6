@@ -22,9 +22,14 @@
 			</div>
 			
 			<li><label>Introduction: </label>{{ imgInfo[5] }}</li>
-			<form method="post">
-				<input type="button" name="like" value="Like">
+			<li><label>Like: </label>{{ imgInfo[7] }}</li>
+			<form method="post" action="/likeprocess">
+				<input type="hidden" name="filename" value="{{ imgInfo[1] }}">
+				<input type="hidden" name="filename_extension" value="{{ imgInfo[8] }}">
+				<li><button style="background: url(static/images/like_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=1></button></li>
+				<li><button style="background: url(static/images/dislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-1></button></li>
 			</form>
+			<li>Like and dislike button, can be change.</li>
 		</ul>
 	</div>
 </body>

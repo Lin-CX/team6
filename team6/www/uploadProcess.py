@@ -46,14 +46,14 @@ def upload():
 			if input_name != "":
 				filename = input_name + '.' + filename.rsplit('.', 1)[1].lower()
 			
-			#######	
+			#######
+			# database operating
 			if checkUserExist(username) == False:
 				return render_template('upload.html', falseInfo="No such username!")
 			else:
 				flag = dbInsertImg(filename, username, image_category, author, intro)
 				if flag != True:
 					return render_template('upload.html', falseInfo=flag)
-			#database working not started yet
 			#######
 			file.save(os.path.join(UPLOAD_FOLDER, filename))
 			#return redirect(url_for('uploadProcess.showPage', filename=filename))	# see uploaded img
@@ -111,8 +111,30 @@ def showPage():
 		return render_template('searchimg.html', falseInfo="No this image!")
 	else:
 		img_stream = return_img_stream(UPLOAD_FOLDER+'/'+filename)
-		imgList[1] = imgList[1].rsplit('.', 1)[0]
+		imgList.append(imgList[1].rsplit('.', 1)[1])
+		imgList[1] = imgList[1].rsplit('.', 1)[0]			# remove the filename extension
 		return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList)
+	
+@uploadProcess.route('/likeprocess', methods=['POST'])
+def likeprocess():
+	#filename = 'dia.png'		# temp
+	filename = request.form["filename"]
+	filename_extension = request.form["filename_extension"]
+	fullfilename = filename+'.'+filename_extension
+	likeOrDislike = request.form["likeOrDislike"]
+	likeDbProcess(fullfilename, int(likeOrDislike))
+	return redirect(url_for('uploadProcess.showPage', filename=fullfilename))
+	
+def likeDbProcess(filename, n):
+	db = dbutil.dbUtils('userdb.db')
+	sql = "select liken from img where imgname = '%s'" % (filename)
+	likeL = db.db_action(sql, 1)
+	like = likeL[0][0]
+	like += n
+	sql = "update img set liken = %d where imgname = '%s'" % (like, filename)
+	flag = db.db_action(sql, 0)
+	db.close()
+	return flag
 	
 def fetchImgInfo(filename):
 	imgList = dbQuery("*", "img")
@@ -143,7 +165,7 @@ def dbInsertImg(imgname, uploader, categroy='unknow', author='unknow', intro='',
 		db.close()
 		return True
 	except:
-		falseinfo = "Exst image name!"
+		falseinfo = "Exist image name!"
 		print(falseinfo)
 		db.close()
 		return falseinfo

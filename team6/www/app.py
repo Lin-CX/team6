@@ -16,6 +16,10 @@ urls = [userProcess, mateProcess, uploadProcess]
 for url in urls:
 	app.register_blueprint(url)
 
+@app.route('/operation_guide')
+def operation_guide():
+	return render_template("operation_guide.html")
+
 @app.route('/')
 def init():
 	return render_template("index.html", name="", data="")

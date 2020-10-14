@@ -16,3 +16,6 @@ Update:
 	---2020/10/10---
 	Optimized the image searching function
 	Added the function of displaying the picture info when viewing the picture.
+	
+	---2020/10/14---
+	Added "like" function. When the "like" button is pressed, the number of likes increases.
