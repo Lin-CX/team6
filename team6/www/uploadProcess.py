@@ -28,11 +28,11 @@ def return_img_stream(img_local_path):
 def upload():
 	if request.method == 'POST':
 		if "file" not in request.files:
-			return redirect(request.url)
+			return render_template('upload.html', falseInfo="Please select file!")
 
 		file = request.files.get('file')
 		if file.filename == '':
-			return redirect(request.url)
+			return render_template('upload.html', falseInfo="Please select file!")
 
 		if file and allowed_file(file.filename):
 			# 1: 회화; 2: 서양화; 3: 동양화
