@@ -18,9 +18,10 @@
 			<label>Image name:</label><br>
 			<input type="text" name="imagename"><br>
 			<label>Author:</label><br>
-			<input type="text" name="author"><br>
+			<input type="text" name="author" placeholder="Optional"><br>
 			<label>Introduction:</label><br>
-			<input type="text" name="intro" style="width:400px; height:100px;"><br>
+			<!--<input type="text" name="intro" style="width:400px; height:100px;" placeholder="Optional"><br>-->
+			<textarea name="intro" style="resize:none;width:450px;height:150px;"></textarea><br>
 			{% if falseInfo %}
 				<p>{{ falseInfo }}</p>
 			{% endif %}

@@ -1,3 +1,10 @@
+# ------------------------------------------
+#  Author:	Peter Cao
+#			https://zhuanlan.zhihu.com/p/91075748
+#
+#  Date:	Oct 16, 2020
+# ------------------------------------------
+
 class dbUtils:
 	def __init__(self, dbName):	# connect to database
 		import sqlite3

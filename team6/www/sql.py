@@ -93,15 +93,34 @@ def fetchImgInfo(filename):
 			return list(i)
 	return False
 	
+def addDbColumn(table, column, columnAttri):
+	db = dbutil.dbUtils(dbname)
+	sql = "alter table %s add column %s %s" % (table, column, columnAttri)
+	try:
+		db.db_action(sql, 0)
+		print("Column insert done.")
+	except:
+		print("Exst column!")
+	db.close()
+
+	
 if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
 	#dbUpdate("movie1", 0)
-	inp = "dia"
-	tlist = dbQuery("*", "img")
+	#ALTER TABLE OLD_COMPANY ADD COLUMN SEX char(1);
+	tlist = dbQuery("username, userpwd, isArtist", "user")
+	if ('test', '123', '1') in tlist:
+		print(1)
+	elif ('test', '123', '0') in tlist or ('test', '123', None) in tlist:
+		print(2)
+	else:
+		print(0)
+	"""tlist = dbQuery("*", "user")
 	for i in tlist:
 		print(i)
-	print('***')
+	print('***')"""
 	#dbInsertImg('di.png', 'imgtest', '0', 'TZ', '')
 	#print(fetchImgInfo('ia.png'))
 	#dbDelete('demo', 'img')
+	#addDbColumn('user', 'isArtist', 'char(1)')

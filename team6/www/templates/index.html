@@ -21,9 +21,15 @@
 				<li><a href="signin"><button style="width:100px">Sign in</button></a></li>
 				<li><a href="register"><button style="width:100px">Register</button></a></li>
 			{% endif %}
-			<li><a href="movie">Movie</a></li>
-			<li><a href="operation_guide">operation_guide</a></li>
-			<li><a href="upload">Upload</a></li>
+			<!--<li><a href="movie">Movie</a></li>-->
+			<li><a href="operation_guide">Operation Guide</a></li>
+			
+			{% if session['isArtist'] == True %}
+				<li><a href="upload">Upload</a></li>
+			{% else %}
+				<li type="button" onclick="alert('Sorry, only artist can upload!')" action="get"><a href="#">Upload</a></li>
+			{% endif %}
+			
 			{% if session['username'] %}
 				<li><a href="searchimg">Img Searching</a><li>
 			{% else %}

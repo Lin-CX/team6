@@ -1,3 +1,13 @@
+# ------------------------------------------
+#  Author: 임준상
+#          Computer Science & Engineering
+#          College of Informatics, Korea Univ.
+#
+#  Date:   Oct 16, 2020
+#
+#  Function: Image upload, Showing, Searching, Like
+# ------------------------------------------
+
 from flask import Flask, render_template, request, redirect, url_for, session, Blueprint, send_from_directory
 import os
 from werkzeug.utils import secure_filename
@@ -51,6 +61,8 @@ def upload():
 			if checkUserExist(username) == False:
 				return render_template('upload.html', falseInfo="No such username!")
 			else:
+				if author == '':
+					author = session['username']
 				flag = dbInsertImg(filename, username, image_category, author, intro)
 				if flag != True:
 					return render_template('upload.html', falseInfo=flag)
@@ -100,7 +112,7 @@ def showProcess():
 	if checkinfo == False:
 		return render_template('searchimg.html', falseInfo="No this image!")
 	else:			
-		return redirect(url_for('uploadProcess.showPage', filename=checkinfo))		
+		return redirect(url_for('uploadProcess.showPage', filename=checkinfo))
 
 @uploadProcess.route('/showPage')
 def showPage():
@@ -146,6 +158,12 @@ def likeprocess():
 		else:
 			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=1)	# dislike
 		
+@uploadProcess.route('/checkImgDetails', methods=['POST'])
+def checkImgDetails():
+	filename = request.form["fn"]
+	filename_extension = request.form["fn_ex"]
+	fullfilename = filename+'.'+filename_extension
+	return send_from_directory(UPLOAD_FOLDER, fullfilename, as_attachment=False)	# download image
 	
 def likeDbProcess(filename, n):
 	db = dbutil.dbUtils('userdb.db')
