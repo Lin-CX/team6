@@ -1,10 +1,13 @@
-www:			python file
+www:			python file, database file
 templates:		html file
-static/images:		pictures
+static/images:		image
 static/css:		css file
 static/js:		javascript file
 static/upload_file	user image
 
+Artist account for testing:
+	username: artist
+	password: 123456
 
 Update:
 
@@ -35,3 +38,9 @@ Update:
 	임준상:
 	1. Now on the image showing page, user can click image to view the details of this image.
 	2. Added artist identity for users. Only artists can upload images. Artist status can be obtained by entering the correct invitation code. (invitation code: 1024)
+	
+	---2020/10/28---
+	임준상:
+	1. If you are artist, now you can manage your image in homepage.
+	2. On management page, artist can check the previously uploaded images.
+	3. If you are the uploader of the image, you can delete that image on image showing page.

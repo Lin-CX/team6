@@ -6,9 +6,24 @@
 {% endblock %}
 {% block head %}
 	<style>
+		.imgp {float:left;}
+		.imgp img{object-fit: scale-down;cursor:pointer;}
 		.imgp li{list-style:none;display:inline;width:300px;margin:0px 30px;}
 		.imginfo li{list-style:none;display:inline;width:300px;margin:0px 30px;}
 	</style>
+	<script>
+	function deleteConf(){
+		var isdelete = prompt("Input your username:");
+		if (username == session['username']) {
+			document.getElementById("deleteimg").submit()
+			alert(1);
+		}
+		else {
+			alert(2);
+			return false;
+		}
+	}
+    </script>
 {% endblock %}
 {% block body %}
 <body>
@@ -18,7 +33,6 @@
 				<input type="hidden" name="fn" value="{{ imgInfo[1] }}">
 				<input type="hidden" name="fn_ex" value="{{ imgInfo[8] }}">
 				<li><img style="width:900px" src="data:;base64,{{ img_stream }}" title="Click to check details" onclick="document.checkDetails.submit();"></li>
-				
 			</form>
 			
 			<div class="imginfo">
@@ -47,6 +61,14 @@
 			</form>
 			<li>Like and dislike button, can be change.</li>
 		</ul>
+	</div>
+	<div>
+		{% if session['username'] ==  imgInfo[2] %}
+			<form method="post" action="/imgDelete" id="deleteimg">
+				<input type="hidden" name="imgname" value="{{ imgInfo[1] }}">
+				<input type="submit" name="submit" onclick="return confirm('Are you sure to delete this picture?');" value="Delete">
+			</form>
+		{% endif %}
 	</div>
 </body>
 {% endblock %}

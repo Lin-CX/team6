@@ -1,5 +1,6 @@
 import sqlite3
 import dbutil
+import time
 
 global db
 dbname = 'userdb.db'
@@ -103,23 +104,54 @@ def addDbColumn(table, column, columnAttri):
 		print("Exst column!")
 	db.close()
 
+def dbInsertReview(imgid, userid, username, content):
+	db = dbutil.dbUtils(dbname)
+	created_at = time.time()
+	sql = "insert into reviews values (null, '%s', '%s', '%s', '%s', '%f')" % (imgid, userid, username, content, created_at)
+	try:
+		db.db_action(sql, 0)
+		print("Review insert done.")
+	except:
+		print("Failed")
+	db.close()
 	
+def dbTableDelete(table, condition):
+	db = dbutil.dbUtils(dbname)
+	sql = "delete from %s %s;" % (table, condition)
+	print(sql)
+	#sql = "PRAGMA  table_info(img)"
+	db.db_action(sql, 0)
+	for i in l:
+		print(i)
+	"""try:
+		db.db_action(sql, 0)
+		print("Delete done.")
+	except:
+		print("Failed")"""
+	db.close()
+
+def dbImgSelect(condition=''):
+	db = dbutil.dbUtils(dbname)
+	sql = "select imgname from img %s" % (condition)
+	imgList = db.db_action(sql, 1)
+	db.close()
+	return imgList
+
 if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
 	#dbUpdate("movie1", 0)
 	#ALTER TABLE OLD_COMPANY ADD COLUMN SEX char(1);
-	tlist = dbQuery("username, userpwd, isArtist", "user")
-	if ('test', '123', '1') in tlist:
-		print(1)
-	elif ('test', '123', '0') in tlist or ('test', '123', None) in tlist:
-		print(2)
-	else:
-		print(0)
-	"""tlist = dbQuery("*", "user")
+	#dbInsertReview('10', '5', 'test', 'My favorite work.')
+	dbTableDelete("img", 'where imgname="Lighty.png"')
+	
+	
+	tlist = dbQuery("*", "img")
+	#tlist = dbImgSelect("where author = 'TZ'")
 	for i in tlist:
 		print(i)
-	print('***')"""
+	print('***')
+	
 	#dbInsertImg('di.png', 'imgtest', '0', 'TZ', '')
 	#print(fetchImgInfo('ia.png'))
 	#dbDelete('demo', 'img')

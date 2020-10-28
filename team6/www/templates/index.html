@@ -17,6 +17,9 @@
 			{% if session['username'] %}
 				<li><a href="#">{{ session['username'] }}</a></li>
 				<li><a href="signout"><button style="width:100px">Sign out</button></a></li>
+				{% if session['isArtist'] == True %}
+					<li><a href="imgManagementPage">Management my image</a></li>
+				{% endif %}
 			{% else %}
 				<li><a href="signin"><button style="width:100px">Sign in</button></a></li>
 				<li><a href="register"><button style="width:100px">Register</button></a></li>

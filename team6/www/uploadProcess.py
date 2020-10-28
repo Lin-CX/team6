@@ -5,7 +5,7 @@
 #
 #  Date:   Oct 16, 2020
 #
-#  Function: Image upload, Showing, Searching, Like
+#  Function: Image upload, Showing, Searching, management, Like
 # ------------------------------------------
 
 from flask import Flask, render_template, request, redirect, url_for, session, Blueprint, send_from_directory
@@ -14,6 +14,7 @@ from werkzeug.utils import secure_filename
 import base64
 import dbutil
 import sqlite3
+import time
 
 uploadProcess = Blueprint('uploadProcess', __name__)
 
@@ -163,7 +164,61 @@ def checkImgDetails():
 	filename = request.form["fn"]
 	filename_extension = request.form["fn_ex"]
 	fullfilename = filename+'.'+filename_extension
-	return send_from_directory(UPLOAD_FOLDER, fullfilename, as_attachment=False)	# download image
+	return send_from_directory(UPLOAD_FOLDER, fullfilename, as_attachment=False)	# True: download image, False: show image
+	
+###############################################################
+	
+@uploadProcess.route('/imgManagementPage', methods=['POST', 'GET'])
+def imgManagementPage():
+	if request.method == "POST":
+		filename = request.form["filename"]
+		print(filename)
+		return redirect(url_for('uploadProcess.showProcess', filename=filename))
+	
+	temp = "where uploader = '%s'" % (session['username'])
+	#temp = "where uploader = '%s'" % ('admin')
+	imgList = dbImgSelect(temp)
+	#length = len(imgList)
+	
+	img_streamList = []
+	for filename in imgList:
+		temp = []
+		temp.append(return_img_stream(UPLOAD_FOLDER+'/'+filename[0]))
+		temp.append(filename[0])
+		s = filename[0].rsplit('.', 1)[0]
+		temp.append(s)
+		img_streamList.append(temp)
+	#img_streamList[][0]: image stream, img_streamList[][1]: image name(with filename extension)
+	return render_template("manaPage.html", img_streamList=img_streamList)
+	
+@uploadProcess.route('/imgDelete', methods=['POST'])
+def imgDelete():
+	imgname = request.form["imgname"]
+	fullfilename = checkFilename(imgname)
+	condition = 'where imgname="%s"' % (fullfilename)
+	dbTableDelete('img', condition)
+	#print(condition)
+	
+	return redirect(url_for("uploadProcess.imgManagementPage"))
+
+def dbTableDelete(table, condition=''):
+	db = dbutil.dbUtils('userdb.db')
+	sql = "delete from %s %s;" % (table, condition)
+	try:
+		db.db_action(sql, 0)
+		print("Delete done.")
+	except:
+		print("Failed")
+	db.close()
+
+def dbImgSelect(condition=''):
+	db = dbutil.dbUtils("userdb.db")
+	sql = "select imgname from img %s" % (condition)
+	imgList = db.db_action(sql, 1)
+	db.close()
+	return imgList
+	
+###############################################################	
 	
 def likeDbProcess(filename, n):
 	db = dbutil.dbUtils('userdb.db')
