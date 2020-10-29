@@ -15,6 +15,7 @@ import base64
 import dbutil
 import sqlite3
 import time
+import random
 
 uploadProcess = Blueprint('uploadProcess', __name__)
 
@@ -97,12 +98,50 @@ def searchimg():
 		
 		# search by author		
 		elif searchby == '2':
-			pass
-		# search by uploader
+			if searchinfo == "":
+				return render_template("searchimg.html", falseInfo="Empty serchInfo!")
+			temp = "where author = '%s'" % (searchinfo)
+			#temp = "where uploader = '%s'" % ('admin')
+			imgList = dbImgSelect(temp)
+			img_streamList = []
+			for filename in imgList:
+				temp = []
+				temp.append(return_img_stream(UPLOAD_FOLDER+'/'+filename[0]))
+				temp.append(filename[0])
+				s = filename[0].rsplit('.', 1)[0]
+				temp.append(s)
+				img_streamList.append(temp)			#img_streamList[][0]: image stream, img_streamList[][1]: image name(with filename extension), img_streamList[][0]: image name(normal)
+			return render_template("img_exhibit.html", img_streamList=img_streamList)
+			
+		#
 		else:
 			pass
 
 	return render_template("searchimg.html")
+	
+@uploadProcess.route('/lookaround')
+def lookaround():
+	imgList = dbImgSelect()
+	length = len(imgList)
+	
+	l = []
+	for i in range(length):
+		l.append(i)
+	random.shuffle(l)
+	if length > 10:
+		l = l[:10]
+	
+	img_streamList = []
+	for i in l:
+		temp = []
+		filename = imgList[i][0]
+		temp.append(return_img_stream(UPLOAD_FOLDER+'/'+filename))
+		temp.append(filename)
+		s = filename.rsplit('.', 1)[0]
+		temp.append(s)
+		img_streamList.append(temp)
+		
+	return render_template("img_exhibit.html", img_streamList=img_streamList)
 
 @uploadProcess.route('/showProcess')
 def showProcess():
