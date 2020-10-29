@@ -158,13 +158,12 @@ def likeprocess():
 			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=2)	# normal
 		else:
 			return render_template('showimg.html', img_stream=img_stream, imgInfo=imgList, isLiked=1)	# dislike
-		
-@uploadProcess.route('/checkImgDetails', methods=['POST'])
+	
+@uploadProcess.route('/checkImgDetails')
 def checkImgDetails():
-	filename = request.form["fn"]
-	filename_extension = request.form["fn_ex"]
-	fullfilename = filename+'.'+filename_extension
-	return send_from_directory(UPLOAD_FOLDER, fullfilename, as_attachment=False)	# True: download image, False: show image
+	filename = request.args.get('filename')
+	fullfilename = checkFilename(filename)
+	return send_from_directory(UPLOAD_FOLDER, fullfilename, as_attachment=False)
 	
 ###############################################################
 	

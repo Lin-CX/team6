@@ -29,11 +29,7 @@
 <body>
 	<div class="imgp">
 		<ul>
-			<form method="post" action="/checkImgDetails" name="checkDetails">
-				<input type="hidden" name="fn" value="{{ imgInfo[1] }}">
-				<input type="hidden" name="fn_ex" value="{{ imgInfo[8] }}">
-				<li><img style="width:900px" src="data:;base64,{{ img_stream }}" title="Click to check details" onclick="document.checkDetails.submit();"></li>
-			</form>
+			<li><a href="http://127.0.0.1:1234/checkImgDetails?filename={{ imgInfo[1] }}"><img style="width:900px" src="data:;base64,{{ img_stream }}" title="Click to check details"></a></li>
 			
 			<div class="imginfo">
 				<li><label>Image name: </label>{{ imgInfo[1] }}</li>
