@@ -12,7 +12,7 @@
 		.imginfo li{list-style:none;display:inline;width:300px;margin:0px 30px;}
 	</style>
 	<script>
-	function deleteConf(){
+	/*function deleteConf(){
 		var isdelete = prompt("Input your username:");
 		if (username == session['username']) {
 			document.getElementById("deleteimg").submit()
@@ -22,22 +22,24 @@
 			alert(2);
 			return false;
 		}
-	}
+	}*/
     </script>
 {% endblock %}
 {% block body %}
 <body>
 	<div class="imgp">
 		<ul>
-			<li><a href="http://127.0.0.1:1234/checkImgDetails?filename={{ imgInfo[1] }}"><img style="width:900px" src="data:;base64,{{ img_stream }}" title="Click to check details"></a></li>
+			<li><a href="http://127.0.0.1:1234/checkImgDetails?filename={{ imgInfo[1] }}"><img style="width:900px" src="data:;base64,{{ img_stream }}" title="Click to check details" oncontextmenu="return false;"></a></li>
 			
 			<div class="imginfo">
 				<li><label>Image name: </label>{{ imgInfo[1] }}</li>
 				<li><label>Author: </label>{{ imgInfo[4] }}</li>
+				<li><label>Category: </label>{{ imgInfo[3] }}</li>
+				<br>
+				<li><label>Introduction: </label>{{ imgInfo[5] }}</li>
+				<br>
+				<li><label>Like(s): </label>{{ imgInfo[7] }}</li>
 			</div>
-			
-			<li><label>Introduction: </label>{{ imgInfo[5] }}</li>
-			<li><label>Like(s): </label>{{ imgInfo[7] }}</li>
 			<form method="post" action="/likeprocess">
 				<input type="hidden" name="filename" value="{{ imgInfo[1] }}">
 				<input type="hidden" name="filename_extension" value="{{ imgInfo[8] }}">
@@ -59,7 +61,7 @@
 		</ul>
 	</div>
 	<div>
-		{% if session['username'] ==  imgInfo[2] %}
+		{% if session['username'] == imgInfo[2] or session['username'] == 'admin' or session['username'] == imgInfo[4] %}
 			<form method="post" action="/imgDelete" id="deleteimg">
 				<input type="hidden" name="imgname" value="{{ imgInfo[1] }}">
 				<input type="submit" name="submit" onclick="return confirm('Are you sure to delete this picture?');" value="Delete">

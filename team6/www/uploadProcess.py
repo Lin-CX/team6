@@ -128,8 +128,8 @@ def lookaround():
 	for i in range(length):
 		l.append(i)
 	random.shuffle(l)
-	if length > 10:
-		l = l[:10]
+	if length > 6:
+		l = l[:6]
 	
 	img_streamList = []
 	for i in l:
@@ -292,7 +292,8 @@ def checkUserExist(username):
 	
 def dbInsertImg(imgname, uploader, categroy='unknow', author='unknow', intro='', tag=''):
 	db = dbutil.dbUtils('userdb.db')
-	sql = "insert into img values (null, '%s', '%s', '%s', '%s', '%s', '%s', 0)" % (imgname, uploader, categroy, author, intro, tag)
+	sql = 'insert into img values (null, "%s", "%s", "%s", "%s", "%s", "%s", 0)' % (imgname, uploader, categroy, author, intro, tag)
+	print("dbinsertImg: %s" % imgname)
 	try:
 		db.db_action(sql, 0)
 		db.close()
