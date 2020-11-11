@@ -143,7 +143,11 @@ if __name__ == "__main__":
 	#dbUpdate("movie1", 0)
 	#ALTER TABLE OLD_COMPANY ADD COLUMN SEX char(1);
 	#dbInsertReview('10', '5', 'test', 'My favorite work.')
+<<<<<<< HEAD
 	#dbTableDelete("img", 'where imgname="Lighty.png"')
+=======
+	dbTableDelete("img", 'where imgname="Lighty.png"')
+>>>>>>> 1ba4d0e2fb3e6c59341975d7002968423d6db003
 	
 	
 	tlist = dbQuery("*", "img")
@@ -155,4 +159,8 @@ if __name__ == "__main__":
 	#dbInsertImg('di.png', 'imgtest', '0', 'TZ', '')
 	#print(fetchImgInfo('ia.png'))
 	#dbDelete('demo', 'img')
+<<<<<<< HEAD
 	#addDbColumn('img', 'expectedPrice', 'integer')
+=======
+	#addDbColumn('user', 'isArtist', 'char(1)')
+>>>>>>> 1ba4d0e2fb3e6c59341975d7002968423d6db003
