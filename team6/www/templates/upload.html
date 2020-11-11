@@ -8,7 +8,7 @@
 {% block body %}
 <body>
 	{% if uploadDone %}
-		{{ uploadDone }}
+		<h1>{{ uploadDone }}</h1>
 	{% else %}
 		<form action="/upload" method="post" enctype="multipart/form-data">
 			<input type="file" name="file">
@@ -17,10 +17,13 @@
 			<input type="radio" name="category" value="동양화">동양화<br>
 			<label>Image name:</label><br>
 			<input type="text" name="imagename"><br>
+			<label>Expected Price:</label><br>
+			<input type="text" name="expectedprice"><br>
 			<label>Author:</label><br>
-			<input type="text" name="author"><br>
+			<input type="text" name="author" placeholder="Optional"><br>
 			<label>Introduction:</label><br>
-			<input type="text" name="intro" style="width:400px; height:100px;"><br>
+			<!--<input type="text" name="intro" style="width:400px; height:100px;" placeholder="Optional"><br>-->
+			<textarea name="intro" style="resize:none;width:450px;height:150px;"></textarea><br>
 			{% if falseInfo %}
 				<p>{{ falseInfo }}</p>
 			{% endif %}
@@ -29,6 +32,7 @@
 			{% else %}
 				<a href="signin"><img alt="upload" onclick="alert('Please sign in!')" src="{{ url_for('static', filename='images/upload_icon.png') }}"></a>
 			{% endif %}
+			 <== Icon can be change
 		</form>
 	{% endif %}
 </body>

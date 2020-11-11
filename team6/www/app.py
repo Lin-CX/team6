@@ -1,3 +1,12 @@
+# ------------------------------------------
+#  Author: 임준상
+#          Computer Science & Engineering
+#          College of Informatics, Korea Univ.
+#
+#  Date:   Oct 16, 2020
+# ------------------------------------------
+
+
 from flask import Flask, render_template, request, redirect, url_for, session, Blueprint, send_from_directory, current_app
 import os
 from werkzeug.utils import secure_filename
@@ -16,9 +25,13 @@ urls = [userProcess, mateProcess, uploadProcess]
 for url in urls:
 	app.register_blueprint(url)
 
+@app.route('/operation_guide')
+def operation_guide():
+	return render_template("operation_guide.html")
+
 @app.route('/')
 def init():
-	return render_template("index.html", name="", data="")
+	return render_template("index.html")
 
 if __name__ == "__main__":
-	app.run(debug=True, port=1234)
+	app.run(debug=True, host='127.0.0.1',port=1234)

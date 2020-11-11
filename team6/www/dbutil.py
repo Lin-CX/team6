@@ -1,3 +1,10 @@
+# ------------------------------------------
+#  Author:	Peter Cao
+#			https://zhuanlan.zhihu.com/p/91075748
+#
+#  Date:	Oct 16, 2020
+# ------------------------------------------
+
 class dbUtils:
 	def __init__(self, dbName):	# connect to database
 		import sqlite3
@@ -12,6 +19,7 @@ class dbUtils:
 				return True
 		except ValueError as e:
 			print(e)
+			return False
 
 	def close(self):			# close database
 		self.conn.commit()

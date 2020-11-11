@@ -1,5 +1,6 @@
 import sqlite3
 import dbutil
+import time
 
 global db
 dbname = 'userdb.db'
@@ -93,15 +94,65 @@ def fetchImgInfo(filename):
 			return list(i)
 	return False
 	
+def addDbColumn(table, column, columnAttri):
+	db = dbutil.dbUtils(dbname)
+	sql = "alter table %s add column %s %s" % (table, column, columnAttri)
+	try:
+		db.db_action(sql, 0)
+		print("Column insert done.")
+	except:
+		print("Exst column!")
+	db.close()
+
+def dbInsertReview(imgid, userid, username, content):
+	db = dbutil.dbUtils(dbname)
+	created_at = time.time()
+	sql = "insert into reviews values (null, '%s', '%s', '%s', '%s', '%f')" % (imgid, userid, username, content, created_at)
+	try:
+		db.db_action(sql, 0)
+		print("Review insert done.")
+	except:
+		print("Failed")
+	db.close()
+	
+def dbTableDelete(table, condition):
+	db = dbutil.dbUtils(dbname)
+	sql = "delete from %s %s;" % (table, condition)
+	print(sql)
+	#sql = "PRAGMA  table_info(img)"
+	db.db_action(sql, 0)
+	for i in l:
+		print(i)
+	"""try:
+		db.db_action(sql, 0)
+		print("Delete done.")
+	except:
+		print("Failed")"""
+	db.close()
+
+def dbImgSelect(condition=''):
+	db = dbutil.dbUtils(dbname)
+	sql = "select imgname from img %s" % (condition)
+	imgList = db.db_action(sql, 1)
+	db.close()
+	return imgList
+
 if __name__ == "__main__":
 	#print(dbInsertUser('null', 'eee', '1234'))
 	#dbInsertMovie('null', 'movie2', 'comedy', '-1132.12', 'text')
 	#dbUpdate("movie1", 0)
-	inp = "dia"
+	#ALTER TABLE OLD_COMPANY ADD COLUMN SEX char(1);
+	#dbInsertReview('10', '5', 'test', 'My favorite work.')
+	#dbTableDelete("img", 'where imgname="Lighty.png"')
+	
+	
 	tlist = dbQuery("*", "img")
+	#tlist = dbImgSelect("where author = 'TZ'")
 	for i in tlist:
 		print(i)
 	print('***')
+	
 	#dbInsertImg('di.png', 'imgtest', '0', 'TZ', '')
 	#print(fetchImgInfo('ia.png'))
 	#dbDelete('demo', 'img')
+	#addDbColumn('img', 'expectedPrice', 'integer')

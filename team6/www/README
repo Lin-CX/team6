@@ -1,18 +1,55 @@
-www:			python file
+www:			python file, database file
 templates:		html file
-static/images:		pictures
+static/images:		image
 static/css:		css file
 static/js:		javascript file
 static/upload_file	user image
 
+Artist account for testing:
+	username: artist
+	password: 123456
+
 Update:
+
 	---2020/10/09---
-	Added image upload function.
-	When user uploading image, the username will be saved together.
-	If no image name be entered when upload, the image will be saved with the original name.
-	If the username not in database, the upload fails.
-	If the image name is duplicated with database info, the upload fails.
+	임준상:
+	1. Added image upload function.
+	2. When user uploading image, the username will be saved together.
+	3. If no image name be entered when upload, the image will be saved with the original name.
+	4. If the username not in database, the upload fails.
+	5. If the image name is duplicated with database info, the upload fails.
 	
 	---2020/10/10---
-	Optimized the image searching function
-	Added the function of displaying the picture info when viewing the picture.
+	임준상:
+	1. Optimized the image searching function
+	2. Added the function of displaying the picture info when viewing the picture.
+	
+	---2020/10/14---
+	임준상:
+	1. Added "like" function.
+	2. Click once to like or dislike, click again to cancel last click.
+	3. After click like or dislike, you can click another one to cancel last click and performing like or dislike operation at the same time.
+	
+	---2020/10/23---
+	임준상:
+	1. Now can check image detials by click image in image showing page.
+	
+	---2020/10/26---
+	임준상:
+	1. Now on the image showing page, user can click image to view the details of this image.
+	2. Added artist identity for users. Only artists can upload images. Artist status can be obtained by entering the correct invitation code. (invitation code: 1024)
+	
+	---2020/10/28---
+	임준상:
+	1. If you are artist, now you can manage your image in homepage.
+	2. On management page, artist can check the previously uploaded images.
+	3. If you are the uploader of the image, you can delete that image on image showing page.
+	
+	---2020/10/29---
+	임준상:
+	1. Fixed some bugs.
+	2. Added "lookaround" function in seaching page.
+	
+	---2020/10/31---
+	임준상:
+	1. Fixed some bugs in upload page.

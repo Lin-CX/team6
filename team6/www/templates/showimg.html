@@ -6,26 +6,68 @@
 {% endblock %}
 {% block head %}
 	<style>
+		.imgp {float:left;}
+		.imgp img{object-fit: scale-down;cursor:pointer;}
 		.imgp li{list-style:none;display:inline;width:300px;margin:0px 30px;}
 		.imginfo li{list-style:none;display:inline;width:300px;margin:0px 30px;}
 	</style>
+	<script>
+	/*function deleteConf(){
+		var isdelete = prompt("Input your username:");
+		if (username == session['username']) {
+			document.getElementById("deleteimg").submit()
+			alert(1);
+		}
+		else {
+			alert(2);
+			return false;
+		}
+	}*/
+    </script>
 {% endblock %}
 {% block body %}
 <body>
 	<div class="imgp">
 		<ul>
-			<li><img style="width:900px" src="data:;base64,{{ img_stream }}"></li>
+			<li><a href="http://127.0.0.1:1234/checkImgDetails?filename={{ imgInfo[1] }}"><img style="width:900px" src="data:;base64,{{ img_stream }}" title="Click to check details" oncontextmenu="return false;"></a></li>
 			
 			<div class="imginfo">
 				<li><label>Image name: </label>{{ imgInfo[1] }}</li>
 				<li><label>Author: </label>{{ imgInfo[4] }}</li>
+				<li><label>Category: </label>{{ imgInfo[3] }}</li>
+				<br>
+				<li><label>Introduction: </label>{{ imgInfo[5] }}</li>
+				<br>
+				<li><label>Like(s): </label>{{ imgInfo[7] }}</li>
+				<li><label>Expected Price: </label>{{ imgInfo[8] }} ₩</li>
 			</div>
-			
-			<li><label>Introduction: </label>{{ imgInfo[5] }}</li>
-			<form method="post">
-				<input type="button" name="like" value="Like">
+			<form method="post" action="/likeprocess">
+				<input type="hidden" name="filename" value="{{ imgInfo[1] }}">
+				<input type="hidden" name="filename_extension" value="{{ imgInfo[9] }}">
+				{% if isLiked == 0 %}
+					<input type="hidden" name="like_type" value="0">
+					<li><button style="background: url(static/images/isLike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-1></button></li>
+					<li><button style="background: url(static/images/dislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-2></button></li>
+				{% elif isLiked == 1 %}
+					<input type="hidden" name="like_type" value="1">
+					<li><button style="background: url(static/images/like_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=2></button></li>
+					<li><button style="background: url(static/images/isDislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=1></button></li>
+				{% else %}
+					<input type="hidden" name="like_type" value="2">
+					<li><button style="background: url(static/images/like_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=1></button></li>
+					<li><button style="background: url(static/images/dislike_button.jpg);width:50px;height:50px" type="submit" name="likeOrDislike" value=-1></button></li>
+				{% endif %}
 			</form>
+			<li>Like and dislike button, can be change.</li>
 		</ul>
+	</div>
+	<div>
+		{% if session['username'] == imgInfo[2] or session['username'] == 'admin' or session['username'] == imgInfo[4] %}
+			<form method="post" action="/imgDelete" id="deleteimg">
+				<input type="hidden" name="imgname" value="{{ imgInfo[1] }}">
+				<input type="submit" name="submit" onclick="return confirm('Are you sure to delete this picture?');" value="Delete">
+			</form>
+		{% endif %}
 	</div>
 </body>
 {% endblock %}

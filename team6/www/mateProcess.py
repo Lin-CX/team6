@@ -1,3 +1,11 @@
+# ------------------------------------------
+#  Author: 임준상
+#          Computer Science & Engineering
+#          College of Informatics, Korea Univ.
+#
+#  Date:   Oct 16, 2020
+# ------------------------------------------
+
 from flask import Blueprint, render_template, session, url_for, request, redirect
 
 import dbutil
