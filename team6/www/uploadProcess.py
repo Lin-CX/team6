@@ -66,11 +66,7 @@ def upload():
 			else:
 				if author == '':
 					author = session['username']
-<<<<<<< HEAD
 				flag = dbInsertImg(filename, username, image_category, author, intro, expectedprice=ep)
-=======
-				flag = dbInsertImg(filename, username, image_category, author, intro)
->>>>>>> 1ba4d0e2fb3e6c59341975d7002968423d6db003
 				if flag != True:
 					return render_template('upload.html', falseInfo=flag)
 			#######
@@ -297,14 +293,9 @@ def checkUserExist(username):
 	
 def dbInsertImg(imgname, uploader, categroy='unknow', author='unknow', intro='', tag='', expectedprice='0'):
 	db = dbutil.dbUtils('userdb.db')
-<<<<<<< HEAD
 	sql = 'insert into img values (null, "%s", "%s", "%s", "%s", "%s", "%s", 0, %s)' % (imgname, uploader, categroy, author, intro, tag, expectedprice)
 	#print("dbinsertImg: %s" % imgname)
 	#print(sql)
-=======
-	sql = 'insert into img values (null, "%s", "%s", "%s", "%s", "%s", "%s", 0)' % (imgname, uploader, categroy, author, intro, tag)
-	print("dbinsertImg: %s" % imgname)
->>>>>>> 1ba4d0e2fb3e6c59341975d7002968423d6db003
 	try:
 		db.db_action(sql, 0)
 		db.close()
